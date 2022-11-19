@@ -16,6 +16,7 @@ void twoSum(const vector<int> in, int target)
         {
             cout << "found" << endl;
             cout << in[i] << " " << it->first << endl;
+
             cout << i << " " << it->second << endl;
         }
         hmap[in[i]] = i;
@@ -23,15 +24,15 @@ void twoSum(const vector<int> in, int target)
 
 }
 
-int main()
-{
+// int main()
+// {
 
-    vector <int> in {1,2,3,4,5,2,32,4,5,34,3,2,4,232};
-    int var = 1; 
-    cout << "hello" << var <<  endl;
-    twoSum(in, 9);
-    return 0;
+//     vector <int> in {1,2,3,4,5,2,32,4,5,34,3,2,4,232};
+//     int var = 1;
+//     cout << "hello" << var <<  endl;
+//     twoSum(in, 9);
+//     return 0;
 
-}
+// }
 
 

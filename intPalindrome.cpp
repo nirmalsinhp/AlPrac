@@ -38,13 +38,13 @@ bool isPalindrom(int num)
 }
 
 
-int main()
-{
-    int in; 
-    cout << "please enter integer :";
-    cin >> in;
-    cout << "entered number - " << in << endl; 
-    bool isPal = isPalindrom(in);
-    cout << ( isPal ? "Palindrom" : "Not Palindrom") << endl;
-    return 0;
-}
+// int main()
+// {
+//     int in; 
+//     cout << "please enter integer :";
+//     cin >> in;
+//     cout << "entered number - " << in << endl; 
+//     bool isPal = isPalindrom(in);
+//     cout << ( isPal ? "Palindrom" : "Not Palindrom") << endl;
+//     return 0;
+// }
