@@ -47,11 +47,11 @@ int main()
     fetch_parts(prices, parents, 8);
 
 
-    vector<vector<int>> inter = { {1,2,23,4,34} , {23, 34,23,23}};
+    /*vector<vector<int>> inter = { {1,2,23,4,34} , {23, 34,23,23}};
     vector<int> newi;
     auto iter = upper_bound(inter.begin(), inter.end(), 34, [](const vector<int> si, int val) 
                                                         {
                                                             return si[0] < val;
-                                                        });
+                                                        });*/
     return 0;
 }
