@@ -1,36 +1,29 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
+// it is just fibonacci, with twist
+long stairs(int n)
+{
+    vector<long> cnt(n + 1, -1);
 
-int stepPerms(int n) {
+    cnt[0] = 1;
+    cnt[1] = 1;
+    
+    for(int i = 2; i < n + 1; ++i)
+    {
+        cnt[i] = cnt[i -1] + cnt[i -2];
+    }
 
-    static int count = 0;
-    if(n < 0 )
-    {
-        return 0;
-    }
-    
-    if(n == 0)
-    {
-        count++;
-        return 0;
-    }
-    
-    int one = stepPerms(n-1);
-    int two = stepPerms(n-2);
-    int three = stepPerms(n-3);
-    
-    cout << "count :" << count << endl;
-   return count;
-    
+    return cnt[n];
+
 }
 
 int main()
 {
-    unsigned int  in;
-    cout << "enter number of stairs :";
-    cin >> in;
-    stepPerms(in);
+    auto n = stairs(100);
+    auto n5 = stairs(5);
+    cout << n << " ways" <<  endl;
+    cout << n5 << " ways" <<  endl;
     return 0;
 }
-
