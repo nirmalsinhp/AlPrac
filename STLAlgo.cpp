@@ -24,6 +24,7 @@
 
 
 #include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
 template <typename T, template <typename ...> class container> 
 static void print_container(const container<T>& C, std::string del = " ")
@@ -155,9 +156,10 @@ int main()
     auto max = max_element(arr.begin(), arr.end());
     cout << "max " <<  *max << endl;
 
-    auto min = min_element(arr.begin(), arr.end()
-    );
+    auto min = min_element(arr.begin(), arr.end());
+    auto minr = ranges::min_element(arr);
     cout << "min " <<  *min << endl;
+    cout << "minr " <<  *minr << endl;
 
     auto ming = minmax_element(arr.begin(), arr.end(), greater<int>());
     // cout << "ming " <<  *ming << endl;

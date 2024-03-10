@@ -15,7 +15,7 @@ vector<vector<int>> powerset(const int n)
 
     for(const auto & b : bsets)
     {
-        vector<int> set;`
+        vector<int> set;
         for(int i = 0; i < n; i++)
         {
             if(b[i])

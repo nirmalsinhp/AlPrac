@@ -77,11 +77,6 @@ class Trie
         }
     }
 
-    vector<string> prefixMatch(string prefix)
-    {
-        vector<string> ks;
-        node * pm =  get()
-    }
 };
 
 int main()

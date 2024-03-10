@@ -1,13 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 int maxSA(vector<int> &arr)
 {
     int maxs = INT_MIN;
     for (int i = 0; i < arr.size(); ++i)
     {
-
         for (int j = i + 1; j < arr.size(); ++j)
         {
             int csum = accumulate(arr.begin() + i, arr.begin() + j, 0);
@@ -89,12 +87,22 @@ long maxSC(vector<int> &arr)
     return maxe;
 }
 
+int maxProfit(vector<int>& prices) {
+    int profit = 0;
+    int minp = INT_MAX;
+    for (auto p : prices) {
+        minp = min(p, minp);
+        profit = max(profit, p - minp);
+    }
+    return profit;
+}
+
 int main()
 {
     using chrono::duration;
     using chrono::duration_cast;
     using chrono::high_resolution_clock;
-    using chrono::nanoseconds;
+    using chrono::microseconds;
 
     random_device dev;
     mt19937 rng(dev());
@@ -104,38 +112,38 @@ int main()
     {
         return dist(rng);
     };
-    vector<int> v(100);
-    generate(v.begin(), v.end(), gen);
+    // vector<int> v(100);
+    // generate(v.begin(), v.end(), gen);
 
-    //    vector<int> v = {31, -49, 59, 26, -53, 58, 97, -93, -23, 85};
+    vector<int> v = {31, -49, 59, 26, -53, 58, 97, -93, -23, 85};
     auto t1 = high_resolution_clock::now();
     int maxs = maxSA(v);
     auto t2 = high_resolution_clock::now();
-    auto g1 = duration_cast<nanoseconds>(t2 - t1);
+    auto g1 = duration_cast<microseconds>(t2 - t1);
     cout << "Brute time " << g1.count() << " ns :" << maxs << endl;
 
     auto t3 = high_resolution_clock::now();
     int maxp = maxSP(v);
     auto t4 = high_resolution_clock::now();
-    auto g2 = duration_cast<nanoseconds>(t4 - t3);
+    auto g2 = duration_cast<microseconds>(t4 - t3);
     cout << "Progressive time " << g2.count() << " ns :" << maxp << endl;
 
     auto t5 = high_resolution_clock::now();
     int maxpr = maxSPR(v);
     auto t6 = high_resolution_clock::now();
-    auto g3 = duration_cast<nanoseconds>(t6 - t5);
+    auto g3 = duration_cast<microseconds>(t6 - t5);
     cout << "Progressive time " << g3.count() << " ns :" << maxpr << endl;
 
     auto t7 = high_resolution_clock::now();
     int maxdq = maxSDQ(v, 0, v.size() - 1);
     auto t8 = high_resolution_clock::now();
-    auto g4 = duration_cast<nanoseconds>(t8 - t7);
+    auto g4 = duration_cast<microseconds>(t8 - t7);
     cout << "Divide & Rule time " << g4.count() << " ns :" << maxdq << endl;
 
     auto t9 = high_resolution_clock::now();
     int maxsc = maxSC(v);
     auto t10 = high_resolution_clock::now();
-    auto g5 = duration_cast<nanoseconds>(t10 - t9);
+    auto g5 = duration_cast<microseconds>(t10 - t9);
     cout << "Scanning/Kadane time " << g5.count() << " ns :" << maxsc << endl;
 
     return 0;

@@ -63,6 +63,9 @@ public:
         dist.clear();
         dist.assign(nv, INT_MAX);
     }
+
+
+    /* MST is lower bound for TSP, TSP creates spannig cycle & removing an edge creates Spanning tree, cost of spanning tree will be >= MST*/
     // Tree is connected Acyclic graph.
     // find an edge with minimum weight that connects tree vertex to non tree vertex and add it to tree, all edges are added to priority queue, weight of edge added to total weight.
     // mostly on undirected graph.
@@ -173,23 +176,25 @@ public:
     {
         /* 2 steps
             1.  update the distances from current vertex
-            2. choose best next vertex with smallest distnace & visited[0]
+            2. choose best next vertex with smallest distnace & visited false;
 
         */
+        vector<int> out_tree;
+
         dist[s] = 0;
-        visited[s] = true;
+        //visited[s] = true;
         auto v = s;
         while (!visited[v])
         {
-            visited[v] == true;
-            for (const auto e : al[s])
+            visited[v] = true;
+            out_tree.push_back(v);
+            for (const auto e : al[v])
             {
                 relax(e);
             }
 
             // find next vertice.
             auto di = INT_MAX;
-            vector<int> out_tree;
             int i = 0;
             for(int i =0 ; i < nv; i++)
             {
@@ -200,7 +205,21 @@ public:
                 }
             }
         }
+    return out_tree;
+    }
 
+
+    void bellman_ford(int s)
+    {
+        dist[s] = 0;
+        for(int i = 0; i < nv; ++i)
+        {
+            for(int j = 0; j < nv; ++j)
+            {
+                for(auto e : al[j])
+                    relax(e);
+            }
+        }
     }
 
     void relax(const Edge &e)
@@ -330,5 +349,11 @@ int main()
     auto wg = G.prim(0);
     cout << "MST weight" << wg << endl;
     G.printMST();
+
+    G.init();
+    auto sp = G.Dijkstra(2);
+    for(auto v : sp)
+        cout << v << " ";
+    cout << endl;
     return 0;
 }

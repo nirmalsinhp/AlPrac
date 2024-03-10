@@ -13,6 +13,12 @@ struct tree
 };
 
 /*
+- Recursive solution to tree problems.
+base case -  where solution can be achieved without any recusrion. (may be at leaf node.)
+recursive case - where solution can be achieved using recusrsion to solve smaller subproblems.
+*/
+
+/*
 when solving tree problems, consider various tree properties and traversals, check which fits best in problem.
 traversals - inorder(sorted), preorder, postorder(expression evaluation), level order, morris traversal
 properties - height of tree, rank, size of tree, parent pointer, search property, complete tree,
@@ -32,6 +38,8 @@ LCA of Binary tree & BST are diff.
   - connected & acyclic
   - adding edge creates cycle
   - removing edge disconnects the graph
+
+a binary tree, where every nonleaf node has exactly two children, is referred to as a full binary tree.
 */
 
 tree *parent; /* last node visited */
@@ -109,6 +117,26 @@ void print_tree(tree *l)
         print_tree(l->right);
     }
 }
+
+// number of nodes
+int num_nodes(tree *root)
+{
+    if(!root)
+        return 0;
+    if(!root->left && !root->right)
+        return 1;
+    return 1 + num_nodes(root->left) + num_nodes(root->right);
+}
+
+int num_leaves(tree *root)
+{
+    if(!root)
+        return 0;
+    if(!root->left && !root->right)
+        return 1;
+    return  num_leaves(root->left) + num_leaves(root->right);
+}
+
 
 /* [[[ sucessor_descd_cut */
 tree *successor_descendant(tree *t)
@@ -298,6 +326,19 @@ int maxWidth(tree *l)
     }
     return width;
 }
+
+/*
+Base case : 
+    1. leaf : visit self, finish
+    2. no left subtree : tail recursion and move ahead
+Recursive case:
+    1. left subtree
+        - find the root's preeccessor , pred(r).right = root. point it's right to root.
+        - tail recurse on left side, not just a smaller version of same proble. eventually will visit the root.
+        - if root is visited itself means back -edge was already set, delete it and recurse to right.
+
+- no mutation of tree, no extra space.
+*/
 
 void MorrisTraversal(tree *root)
 {

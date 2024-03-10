@@ -16,7 +16,6 @@ void selection_sort(vector<T>& vec)
         auto min = i;
         for(int j = i+1; j < size; ++j)
         { // L --> R
-
             if(vec[j] < vec[min])
                 min = j;
         }

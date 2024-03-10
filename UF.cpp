@@ -1,5 +1,11 @@
 #include "UF.h"
 
+/*
+for union find to work relation ship between nodes/elements needs to be
+1. reflexive. X -> f(x)
+2. symmetric. x -> y && y -> x
+3. transitive. x ->y, y -> z && x -> z.
+A relationship that is reflexive, symmetric, and transitive is called an equivalence relation.*/
 
 using namespace std;
 

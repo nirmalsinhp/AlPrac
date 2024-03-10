@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+// inner product can be very useful algo with custom ops. check out.
 template <typename T, template <typename ...> class container> 
 static void print_container(const container<T>& C, std::string del = " ")
 {

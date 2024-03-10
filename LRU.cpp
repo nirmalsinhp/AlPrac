@@ -34,7 +34,6 @@ public:
         _data.erase(_data.begin() + index);
         _data.emplace_back(pair);
         _hash[pair.first] = _data.size() - 1;
-        
     }
 
     void deleteLR()

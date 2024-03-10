@@ -29,14 +29,14 @@ int findMaxSubArraySum(const vector<int> &arr, int k)
 {
     int maxSum = INT_MIN;
     int currSum = 0;
-
+    int ws = 0;
     for (int i = 0; i < arr.size(); ++i)
     {
         currSum += arr[i];
         if (i >= k - 1) // reached K // window size
         {
             maxSum = max(maxSum, currSum);
-            currSum -= arr[i - (k - 1)]; // slide & subtract the furthesr left  value.
+            currSum -= arr[ws++]; // slide & subtract the furthesr left  value.
         }
     }
     return maxSum;
@@ -268,7 +268,7 @@ int main()
     auto maxSum = findMaxSubArraySum(vec, 3);
     cout << "MaxSum : " << maxSum << endl;
 
-    return 0;
+  //  return 0;
 
     auto srt = minWindow("ADOBECODEBANC", "ABC");
     auto srt2 = minWindow2("ADOBECODEBANC", "ABC");
