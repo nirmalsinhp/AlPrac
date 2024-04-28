@@ -13,20 +13,22 @@ struct tree
 };
 
 /*
+The invariant is: for any node x, for all nodes y in the left subtree of x, key(y) <
+key(x). For all nodes y in the right subtree of x key(y) > key(x).
 - Recursive solution to tree problems.
 base case -  where solution can be achieved without any recusrion. (may be at leaf node.)
 recursive case - where solution can be achieved using recusrsion to solve smaller subproblems.
 */
 
 /*
-when solving tree problems, consider various tree properties and traversals, check which fits best in problem.
-traversals - inorder(sorted), preorder, postorder(expression evaluation), level order, morris traversal
-properties - height of tree, rank, size of tree, parent pointer, search property, complete tree,
+- when solving tree problems, consider various tree properties and traversals, check which fits best in problem.
+- traversals - inorder(sorted), preorder, postorder(expression evaluation), level order, morris traversal. Processing the item first yields a pre-order traversal, while processing it last gives a post-order traversal. These make relatively little sense with search trees, but prove useful when the rooted tree represents arithmetic or logical expressions.
+- properties - height of tree, rank, size of tree, parent pointer, search property, complete tree,
 index of childs in complete tree, ancestors,
-succesor - left most in right subtree.
-predecessor - right most in left subtree.
-deletion - habbard deletion.
-left rotation, right rotation, flip colors,
+- succesor - left most in right subtree.
+- predecessor - right most in left subtree.
+- deletion - habbard deletion.
+- left rotation, right rotation, flip colors,
 - check order statistics binary tree
 - one sided binary search - search for 2, 4, 8, 16
 - tombstone, laze deletion approach.
@@ -141,6 +143,12 @@ int num_leaves(tree *root)
 /* [[[ sucessor_descd_cut */
 tree *successor_descendant(tree *t)
 {
+    /*
+            #
+             \
+            /
+           /
+    */
     tree *succ; /* successor pointer */
 
     if (t->right == NULL)
@@ -159,6 +167,12 @@ tree *successor_descendant(tree *t)
 /* [[[ find_minimum_cut */
 tree *find_minimum(tree *t)
 {
+        /*
+             #
+            /
+           /
+    */
+
     tree *min; /* pointer to minimum */
 
     if (t == NULL)
@@ -177,6 +191,13 @@ tree *find_minimum(tree *t)
 
 tree *predecessor_descendant(tree *t)
 {
+        /*
+            #
+           /
+            \
+             \
+    */
+
     tree *pred; /* predecessor pointer */
 
     if (t->left == NULL)
@@ -309,6 +330,9 @@ int maxWidth(tree *l)
     Q.push({l, 1});
     while (!Q.empty())
     {
+        auto start = Q.front().second;
+        auto end = Q.back().second;
+
         width = max(width, Q.back().second - Q.front().second + 1);
         cout << "width : " << width << endl;
         queue<pair<tree *, int>> q;
@@ -318,9 +342,9 @@ int maxWidth(tree *l)
             auto nd = Q.front();
             Q.pop();
             if (nd.first->left)
-                q.push({nd.first->left, nd.second * 2});
+                q.push({nd.first->left, (nd.second - start) * 2}); // to avoid overflow.
             if (nd.first->right)
-                q.push({nd.first->right, nd.second * 2 + 1});
+                q.push({nd.first->right, (nd.second - start)* 2 + 1});
         }
         Q = q;
     }

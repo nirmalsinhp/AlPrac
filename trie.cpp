@@ -63,7 +63,6 @@ class Trie
         string prefix;
         collect(root, prefix, ks);
         return ks;
-
     }
 
     void collect(node * root, string prefix, vector<string>& keys)

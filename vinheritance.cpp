@@ -53,19 +53,19 @@ class D : public B, public C
 
 int D::func1()
 {
- //   using C::func1;
-    func1();
+    //using C::func1;
+    C::func1();
     return 1;
 }
 
 int main()
 {
     D d;
-    set<A> aset;
-    A a, b, c;
-    aset.insert(a);
-    aset.insert(b);
-    aset.insert(c);
+    // set<A> aset;
+    // A a, b, c;
+    // aset.insert(a);
+    // aset.insert(b);
+    // aset.insert(c);
     d.func1();
 
     return 0;

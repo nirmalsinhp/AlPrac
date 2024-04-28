@@ -186,10 +186,12 @@ public:
         auto v = s;
         while (!visited[v])
         {
+            // completes when all vertex are visited.
             visited[v] = true;
             out_tree.push_back(v);
             for (const auto e : al[v])
             {
+                // relax all edges for vertex.
                 relax(e);
             }
 
@@ -198,6 +200,7 @@ public:
             int i = 0;
             for(int i =0 ; i < nv; i++)
             {
+                // find vertex with min distance. & unvisited.
                 if(!visited[i] && dist[i] < di)
                 {
                     di = dist[i];

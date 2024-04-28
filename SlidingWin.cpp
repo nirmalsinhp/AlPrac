@@ -47,6 +47,7 @@ int findMaxSubArraySum(const vector<int> &arr, int k)
 // 1. finding max/longest, keep increasing till condition satisfied & checking max. if cond false keep shrinking.
 // 2. find min/smallest. once satisfying condition is hit, check window size, keep shrinking till cond it satisfied.
 
+// dynamic window type 2.
 int smallestSubArray(const vector<int> &arr, int sum)
 {
     int wSize = INT_MAX;
@@ -65,6 +66,7 @@ int smallestSubArray(const vector<int> &arr, int sum)
     return wSize;
 }
 
+// dynamic window type 1
 int lengthOfLongestSubstring(string s)
 {
     int ws = 0;
@@ -74,13 +76,13 @@ int lengthOfLongestSubstring(string s)
 
     for (; we < s.length(); we++)
     {
-        while (map.count(s[we]))
+        while (map.count(s[we])) // condition false, keep shrinking till condition is true again.
         {
             map.erase(s[ws]);
             ws++;
         }
         map.insert(s[we]);
-        wm = max(wm, we - ws + 1);
+        wm = max(wm, we - ws + 1); // keep increasing it condition is satisfied.
     }
     return wm == INT_MIN ? 0 : wm;
 }
@@ -101,7 +103,7 @@ int longestSubStrDist(const string &s, int k)
     for (int we = 0; we < s.size(); ++we)
     {
         currS++;
-        freq[s[we]]++;
+        freq[s[we]]++; // need to add before, as we do not know if it will increase the freq.
         while (freq.size() > k)
         {
             decrFreq(freq, s[ws]);
@@ -113,7 +115,7 @@ int longestSubStrDist(const string &s, int k)
     return (maxS == INT_MIN) ? currS : maxS;
 }
 
-// longest substring if k chars can be replaces
+// longest substring if k chars can be replaced
 int characterReplacement(string s, int k)
 {
 
@@ -121,14 +123,14 @@ int characterReplacement(string s, int k)
     int start = 0;
     int end = 0;
     int max_freq = 0;
-    int ws = 0;
+    int wsz = 0;
     int max_len = 0;
     for (; end < s.size(); ++end)
     {
         fmap[s[end]]++;
-        max_freq = max(max_freq, fmap[s[end]]);
-        ws = end - start + 1;
-        if (ws - max_freq > k)
+        max_freq = max(max_freq, fmap[s[end]]); // keeping max freq fresh,
+        wsz = end - start + 1;
+        if (wsz - max_freq > k)
         {
             // max_len = max(max_len,ws);
             fmap[s[start]]--;
@@ -262,13 +264,39 @@ string minWindow2(string s, string t)
     return d == INT_MAX ? "" : s.substr(head, d);
 }
 
+int subarraysWithKDistinct(vector<int> &nums, int k)
+{
+    unordered_map<int, int> fmap;
+    int ws = 0;
+    int res = 0;
+    for (int we = 0; we < nums.size(); ++we)
+    {
+        fmap[nums[we]]++;
+        if (fmap.size() == k)
+        {
+            while (fmap.size() == k)
+            {
+                if (--fmap[nums[ws]] == 0)
+                    fmap.erase(nums[ws]);
+                ws++;
+            }
+            res += ws;
+        }
+    }
+    return res;
+}
+
 int main()
 {
+
+    vector<int> nums = {1, 2, 1, 2, 3};
+    auto ks = subarraysWithKDistinct(nums, 2);
+    return 0;
     vector<int> vec{4, 2, 1, 7, 8, 1, 2, 8, 1, 0};
     auto maxSum = findMaxSubArraySum(vec, 3);
     cout << "MaxSum : " << maxSum << endl;
 
-  //  return 0;
+    //  return 0;
 
     auto srt = minWindow("ADOBECODEBANC", "ABC");
     auto srt2 = minWindow2("ADOBECODEBANC", "ABC");

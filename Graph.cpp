@@ -124,12 +124,12 @@ public:
         while (!dq.empty())
         {
             auto v = dq.front();
-            dq.pop_front();
-            for (auto u : al[v])
+            dq.pop_front(); // pick a node
+            for (auto u : al[v]) // traverse all neighbours
             {
-                if (!visited[u])
+                if (!visited[u]) // if not visited
                 {
-                    visited[u] = true;
+                    visited[u] = true; // visit and push into queue.
                     dq.push_back(u);
                     visit(u);
                 }
