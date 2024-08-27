@@ -25,6 +25,7 @@ I l_bound(I f, I l, T v)
     return f;
 }
 
+// when searching exact value use, <= , when searching for some case use like min etc < 
 // find middle element, compare with item to be searched, if == return mid, if greater than item high = mid - 1
 // else low  =  mid + 1, nlogn time
 template <typename T>

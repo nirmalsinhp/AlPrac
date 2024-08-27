@@ -264,6 +264,7 @@ string minWindow2(string s, string t)
     return d == INT_MAX ? "" : s.substr(head, d);
 }
 
+// this is wrong,
 int subarraysWithKDistinct(vector<int> &nums, int k)
 {
     unordered_map<int, int> fmap;
@@ -286,9 +287,44 @@ int subarraysWithKDistinct(vector<int> &nums, int k)
     return res;
 }
 
+int longestSubarray(vector<int> &nums, int limit)
+{
+    multiset<int, greater<int>> mxq;
+    multiset<int> mnq;
+
+    //  cout << "start  " << endl;
+    int ws = 0;
+    int we = 0;
+    int ml = 0;
+
+    for (; we < nums.size(); we++)
+    {
+        mxq.insert(nums[we]);
+        mnq.insert(nums[we]);
+        int maxd = abs(*mxq.begin() - *mnq.begin());
+        // cout << ws << " " << we << " " << maxd << endl;
+        while (maxd > limit)
+        {
+            mxq.extract(nums[ws]);
+            mnq.extract(nums[ws]); // needs to use extract here, erase deletes all value with same key.
+            ws++;
+            maxd = abs(*mxq.begin() - *mnq.begin());
+        }
+        ml = max(we - ws + 1, ml);
+        //  cout << "ML" << ml << endl;
+    }
+
+    return ml;
+}
+
 int main()
 {
 
+    vector<int> nns{8, 2, 4, 7};
+
+    auto lenm = longestSubarray(nns, 4);
+    cout << "max lenght" << lenm << endl;
+    return 0;
     vector<int> nums = {1, 2, 1, 2, 3};
     auto ks = subarraysWithKDistinct(nums, 2);
     return 0;

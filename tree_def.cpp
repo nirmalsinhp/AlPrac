@@ -23,6 +23,7 @@ recursive case - where solution can be achieved using recusrsion to solve smalle
 /*
 - when solving tree problems, consider various tree properties and traversals, check which fits best in problem.
 - traversals - inorder(sorted), preorder, postorder(expression evaluation), level order, morris traversal. Processing the item first yields a pre-order traversal, while processing it last gives a post-order traversal. These make relatively little sense with search trees, but prove useful when the rooted tree represents arithmetic or logical expressions.
+- This "go deep as far as possible and then backtrack" behavior differentiates DFS from Breadth-First Search (BFS), which explores all the nodes at "level" before moving on to the next level.
 - properties - height of tree, rank, size of tree, parent pointer, search property, complete tree,
 index of childs in complete tree, ancestors,
 - succesor - left most in right subtree.

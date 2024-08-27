@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+/*A monotonic stack is a special type of stack in which all elements on the stack are sorted in either descending or ascending order. It is used to solve problems that require finding the next greater or next smaller element in an array.*/
+
 bool validParans(string s)
 {
     stack<char> S;
@@ -30,6 +33,31 @@ bool validParans(string s)
     }
     return S.empty(); // should be empty at end.
 }
+
+int longestValidParentheses(string s) {
+
+        stack<int> S;
+        S.push(-1); // needs sentinel
+        int ml = 0;
+        for(int i = 0; i < s.size(); ++i)
+        {
+            //cout << i << " " << s[i] << " " << ml << endl;
+            if(s[i] == '(')
+                S.push(i);
+            else if(s[i] == ')')
+            {
+                S.pop();
+                if(S.empty())
+                    S.push(i);
+                else
+                {
+                    //int idx
+                    ml = max(ml, i - S.top());
+                }
+            }
+        }
+        return ml;
+    }
 
 string simplifyPath(string path)
 {
@@ -67,6 +95,32 @@ string simplifyPath(string path)
     }
     return ret;
 }
+
+    string simplifyPathVec(string path) {
+        // just because it is marked in stack based on list, you do not need to use stack.
+        istringstream ss(path);
+        vector<string> stk;
+        string dir;
+        while(getline(ss, dir, '/'))
+        {
+            if(dir == "." || dir == "")
+                continue;
+            else if(dir != "..")
+                stk.push_back(dir);
+            else if(!stk.empty())
+                stk.pop_back();
+        }
+        string out;
+        for(auto p : stk)
+        {
+            out += "/" + p;
+        }
+        if(out.empty())
+            return "/";
+        return out;
+
+    }
+
 
 int evalRPN(vector<string> &tokens)
 {

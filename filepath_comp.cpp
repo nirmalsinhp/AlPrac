@@ -6,6 +6,7 @@ class Node
 public:
     string name;
     bool is_file = false;
+    bool deleted = false;
     unordered_map<string, Node *> childs;
     int files_count = 1;
 
@@ -45,10 +46,10 @@ public:
                 node->childs[dir] = new Node(dir);
             }
             node = node->childs[dir];
-            node->files_count = accumulate(node->childs.begin(), node->childs.end(), 0, [](const auto sum, const auto & c)
-                        {
-                            return sum + c.second->files_count;
-                        });
+            // node->files_count = accumulate(node->childs.begin(), node->childs.end(), 0, [](const auto sum, const auto & c)
+            //             {
+            //                 return sum + c.second->files_count;
+            //             });
         }
         node->is_file = true;
         node->name = ofile;
@@ -79,13 +80,47 @@ public:
         return out;
     }
 
+    bool dlt_rec(Node * root, string file)
+    {
+        int pos = file.find("/", 1);
+        if(pos == string::npos)
+        {
+            if(root->is_file)
+            {
+                root->is_file = false;
+                root->deleted = true;
+            }
+            return root;
+        }
+        string dir = file.substr(0, pos);
+        string left = file.substr(pos + 1);
+        dlt_rec(root->childs[dir], left);
+        if(root->childs.empty() 
+        || all_of(root->childs.begin(), root->childs.end(), [](auto node)
+                                        {
+                                            return node.second->deleted;
+                                        }));
+        {
+            root->deleted = true;
+        }
+        
+
+    }
+    bool dlt(Node * root, string file)
+    {
+        if(!root)
+            return false;
+        dlt_rec(root, file);
+
+    }
+
     void collect(Node * root, vector<string>& out)
     {
         if(!root)
             return;
         for(auto nd : root->childs)
         {
-            if(nd.second->files_count == 0 || nd.second->is_file)
+            if(!nd.second->deleted || nd.second->is_file)
             {
                 out.push_back(nd.first);
                 return;

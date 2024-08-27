@@ -17,7 +17,7 @@ vector<vector<int>> zigzagLevelOrder(TreeNode* root)
     queue<TreeNode*> lq;
     if(!root)
         return vec;
-    
+
     auto start = root;
     lq.push(root);
 

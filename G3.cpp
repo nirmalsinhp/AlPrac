@@ -11,7 +11,8 @@ Given a list of disk and list of snapshot objects, return a sequence of disk del
 
 
 */
-
+#include <bits/stdc++.h>
+using namespace std;
 
 
 
@@ -22,13 +23,13 @@ class Disk
   int source; // source disk or snapshot;
   bool isDisk;
  public:
-  Disk(int in_id, int src, is_disk = true): id(in_id), source(src), isDisk(is_disk)
+  Disk(int in_id, int src, bool is_disk = true): id(in_id), source(src), isDisk(is_disk)
   {}
 };
 
 vector<bool> visited;
 vector<bool> processed;
-using AdjuscancyList = unordered_map<int, <vector<int>>;
+using AdjuscancyList = unordered_map<int, vector<int>>;
 vector<Disk> deletionSequence(vector<Disk>& disks, vector<Disk>& snapshots)
 {
   unordered_map<int, Disk> disk_map;
@@ -44,8 +45,8 @@ vector<Disk> deletionSequence(vector<Disk>& disks, vector<Disk>& snapshots)
     //disk_map[d.id] = d;
   }
   
-  visited(al.size(), false);
-  processed(al.size(), false);
+  visited = vector<bool>(al.size(), false);
+  processed = vector<bool>(al.size(), false);
   vector<int> postOrder;
   
   for(auto s : al)
@@ -70,7 +71,7 @@ vector<Disk> deletionSequence(vector<Disk>& disks, vector<Disk>& snapshots)
   
 }
 
-void dfs(AL& al, int start, vector<int> & postOrder)
+void dfs(AdjuscancyList& al, int start, vector<int> & postOrder)
 {
   
   visited[start] = true;
@@ -82,7 +83,7 @@ void dfs(AL& al, int start, vector<int> & postOrder)
     }     
     if(!processed[v])
     {
-      cout << cycle << endl;
+      cout << "cycle" << endl;
       return;
     }
   }

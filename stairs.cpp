@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
+/*
+if a problem has optimal substructure (it can be solved using recursion), and there are overlapping subproblems (the same recursive call is made multiple times), then we can use dynamic programming to handle the overlapping subproblems more efficiently.*/
 // it is just fibonacci, with twist
 long stairs(int n)
 {

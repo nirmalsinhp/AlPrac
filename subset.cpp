@@ -8,6 +8,7 @@ vector<vector<int>> powerset(const int n)
     vector<vector<int>> res;
     vector<bitset<32>> bsets;
     int nc = 1 << n;
+    cout << "Sets " << nc << endl;
     for(int i = 0 ; i < nc; i++)
     {
         bsets.push_back(bitset<32>(i));

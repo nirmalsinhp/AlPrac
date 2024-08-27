@@ -141,7 +141,7 @@ int main()
     cout << "dynamic time " << d1.count() << endl;
     cout << "dynamic  2 time " << d2.count() << endl;
 
-    cout << "binomian coeff :" << bionomian_coff(22, 3) << endl;
+    cout << "binomian coeff :" << bionomian_coff(4, 5) << endl;
 
     return 0;
 }

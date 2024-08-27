@@ -34,6 +34,7 @@ bool canJumpRev(const vector<int>& nums)
     int goal = nums.size() - 1;
     for(int i = nums.size() - 1; i >=0; --i)
     {
+        cout << i << " " << goal << endl;
         if(i + nums[i] >= goal)
             goal = i;
     }

@@ -79,8 +79,8 @@ int main()
     cout << "sum :" << val << endl;
     auto paths = gridPaths(4, 3);
     auto bio = bionomian_coff(7, 4);
-    auto paths2 = gridPaths(9, 6);
-    auto pathsd2 = gridPathsDP(9, 6);
+    auto paths2 = gridPaths(7, 5);
+    auto pathsd2 = gridPathsDP(7, 5);
 
     auto bio2 = bionomian_coff(15, 9);
 
