@@ -41,23 +41,47 @@ public:
     sharedptr(U* ip) : ptr(ip), rc(new size_t(1)), d_(new destroy<U, default_delete<U>>(default_delete<U>{}))
     {}
 
+    // template <typename U, typename = enable_if_t<is_base_of_v<T*, U*> > >
+    // sharedptr(U* ip) : ptr(ip), rc(new size_t(1)), d_(new destroy<U, default_delete<U>>(default_delete<U>{}))
+    // {}
+
     sharedptr(const sharedptr& rhs);
     sharedptr& operator=(const sharedptr& rhs);
 
     sharedptr(sharedptr&& rhs);
     sharedptr& operator=(sharedptr&& rhs);
 
-    // does not work with void.
-    // T& operator*()
-    // {
-    //     return *ptr;
-    // }
+//    does not work with void.
+    template <typename U = T>
+    enable_if_t<!is_void_v<U>, U&>
+    operator*()
+    {
+        return *ptr;
+    }
 
-    // const T& operator*() const
-    // {
-    //     return *ptr;
-    // }
+    template <typename U = T>
+    enable_if_t<!is_void_v<U>, const U&>
+    operator*() const
+    {
+        return *ptr;
+    }
 
+    /*
+    // Specialization for void
+    template <typename U = T>
+    enable_if_t<is_void_v<U>, void>
+    operator*()
+    {
+        throw runtime_error("Dereferencing void pointer is not allowed");
+    }
+
+    template <typename U = T>
+    enable_if_t<is_void_v<U>, void>
+    operator*() const
+    {
+        throw runtime_error("Dereferencing void pointer is not allowed");
+    }
+*/
     T* operator->()
     {
         return ptr;
@@ -184,16 +208,37 @@ sharedptr<T>& sharedptr<T>::operator=(sharedptr&& rhs)
     return *this;
 }
 
-struct myClass
+struct Base
 {
     string mc = "string";
-    ~myClass()
+    virtual void func()
+    {
+        cout << "Base" << endl;
+    }
+    virtual ~Base()
     {
         cout << __PRETTY_FUNCTION__ << endl;
-        cout << "myClass dtor" << endl;
+        cout << "Base Class dtor" << endl;
     }
 
 };
+
+struct Derived : public Base
+{
+    string mc = "string";
+    virtual void func()
+    {
+        cout << "Derived" << endl;
+    }
+    virtual ~Derived()
+    {
+        cout << __PRETTY_FUNCTION__ << endl;
+        cout << "Derived Class dtor" << endl;
+    }
+
+};
+
+
 int main()
 {
     auto dltr = [](auto ptr)
@@ -202,9 +247,14 @@ int main()
             delete ptr;
         };
     auto ssp = makeshared<string>("string");
-    sharedptr<string> sp(new string("string is"), dltr);
-    sharedptr<int> spi(new int(1), dltr);
-    sharedptr<void> svi(new int(1));
-    sharedptr<void> svm(new myClass());
+    // sharedptr<string> sp(new string("string is"), dltr);
+    // sharedptr<int> spi(new int(1), dltr);
+    // sharedptr<void> svi(new int(1));
+    // sharedptr<void> svm(new myClass());
+ //   cout << *svm << endl;  fails as expected.
+    //sharedptr<Derived> dptr = makeshared<Derived>();
+    sharedptr<Base> bptr(new Derived());
+    //shared_ptr<Base> bptr = shared_ptr<Base>(new Derived());
+    bptr->func();
     return 0;
 }
